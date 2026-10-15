@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 11 and lower: back up only the database, and only when the backup is
+  encrypted on the device (see data_extraction_rules.xml for Android 12+).
+-->
+<full-backup-content>
+    <include domain="file" path="coin_pilot.sqlite" requireFlags="clientSideEncryption" />
+    <include domain="file" path="coin_pilot.sqlite-wal" requireFlags="clientSideEncryption" />
+</full-backup-content>

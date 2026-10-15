@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ backup rules (docs/privacy.md, ADR 0005).
+  Files live in getFilesDir() = path_provider's Application Support directory.
+  - Cloud backup: only the database, and only when the backup is end-to-end
+    encrypted with the user's screen lock. Receipt photos are excluded (25 MB cap).
+  - Device-to-device transfer: the database and receipt photos.
+  The database name comes from lib/src/core/database/connection.dart.
+-->
+<data-extraction-rules>
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
+        <include domain="file" path="coin_pilot.sqlite" />
+        <include domain="file" path="coin_pilot.sqlite-wal" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="file" path="coin_pilot.sqlite" />
+        <include domain="file" path="coin_pilot.sqlite-wal" />
+        <include domain="file" path="receipts/" />
+    </device-transfer>
+</data-extraction-rules>

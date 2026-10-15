@@ -1,0 +1,8 @@
+{
+  "APP_FLAVOR": "dev",
+  "AI_BACKEND": "fake",
+  "FUNCTIONS_REGION": "us-central1",
+  "USE_FIREBASE_EMULATORS": "false",
+  "EMULATOR_HOST": "10.0.2.2",
+  "SEED_DEMO_DATA": "true"
+}

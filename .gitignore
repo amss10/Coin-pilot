@@ -1,0 +1,27 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Secrets and local-only config (never commit)
+.env
+.env.*
+!.env.example
+**/.secret.local
+**/serviceAccount*.json
+app/env/*.local.json
+
+# Firebase / backend build output
+backend/.firebase/
+backend/*-debug.log
+backend/*-debug.log.*
+backend/functions/lib/
+backend/functions/node_modules/
+backend/functions/coverage/
+backend/functions/evals/results/

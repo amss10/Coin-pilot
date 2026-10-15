@@ -1,0 +1,27 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+formatter:
+  page_width: 100
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - lib/src/core/l10n/gen/**
+    - test/drift/**
+  errors:
+    # Needed for freezed classes that carry @JsonKey annotations.
+    invalid_annotation_target: ignore
+
+plugins:
+  riverpod_lint: ^3.1.9
+
+linter:
+  rules:
+    # This is an app, not a published package.
+    public_member_api_docs: false
+    # The formatter wraps at 100 columns.
+    lines_longer_than_80_chars: false

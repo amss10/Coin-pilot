@@ -1,0 +1,8 @@
+{
+  "APP_FLAVOR": "prod",
+  "AI_BACKEND": "firebase",
+  "FUNCTIONS_REGION": "us-central1",
+  "USE_FIREBASE_EMULATORS": "false",
+  "EMULATOR_HOST": "",
+  "SEED_DEMO_DATA": "false"
+}

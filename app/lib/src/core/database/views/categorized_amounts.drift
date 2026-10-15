@@ -1,0 +1,41 @@
+import '../tables/transactions.dart';
+
+-- Every spending/income amount with its category: unsplit standard
+-- transactions plus individual split lines. Excludes transfers, adjustments,
+-- opening balances and soft-deleted rows. All budget and insight queries
+-- read from this view so they agree on what "spending" means.
+CREATE VIEW categorized_amounts AS
+  SELECT
+    t.id AS transaction_id,
+    -- NULLIF(x, x) is NULL; drift infers it as a nullable TEXT column.
+    NULLIF(t.id, t.id) AS split_id,
+    t.account_id AS account_id,
+    t.booked_on AS booked_on,
+    t.category_id AS category_id,
+    t.amount_minor AS amount_minor,
+    t.currency_code AS currency_code,
+    t.merchant AS merchant,
+    t.payee_raw AS payee_raw
+  FROM transactions t
+  WHERE t.deleted_at IS NULL
+    AND t.entry_type = 'standard'
+    AND NOT EXISTS (
+      SELECT 1 FROM transaction_splits s
+      WHERE s.transaction_id = t.id AND s.deleted_at IS NULL
+    )
+  UNION ALL
+  SELECT
+    t.id AS transaction_id,
+    s.id AS split_id,
+    t.account_id AS account_id,
+    t.booked_on AS booked_on,
+    s.category_id AS category_id,
+    s.amount_minor AS amount_minor,
+    t.currency_code AS currency_code,
+    t.merchant AS merchant,
+    t.payee_raw AS payee_raw
+  FROM transaction_splits s
+  INNER JOIN transactions t ON t.id = s.transaction_id
+  WHERE s.deleted_at IS NULL
+    AND t.deleted_at IS NULL
+    AND t.entry_type = 'standard';
